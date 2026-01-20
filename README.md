@@ -2,42 +2,42 @@
 
 This project is a simple distributed-style chat application built in Python.
 
-## this project has been made for the module: distributed-systems in my third year as a computer science student.
+## This project has been made for the course: Distributed Systems in my third year as a computer science student.
 
 ---
 
-## Résumé demandé
+## Required Summary
 
 ### Architecture
 
-- Application **client/serveur** en TCP : un seul serveur (`server_projet.py`), plusieurs clients (`client_projet.py`).
-- Le serveur maintient :
-  - une table des **clients connectés** (`clients`) avec leur socket, nom d'utilisateur, salle courante et heure de connexion ;
-  - un dictionnaire de **salles** (`rooms`) : nom de salle → ensemble de sockets ;
-  - un dictionnaire de **leaders par salle** (`leaders`) : nom de salle → nom du leader.
-- Chaque client appartient au plus à **une seule salle** à la fois et envoie/reçoit uniquement les messages de cette salle, plus quelques notifications globales.
+- **Client/server** TCP application: a single server (server_projet.py), multiple clients (client_projet.py).
+- The server maintains:
+  - a table of **connected clients** (clients) with their socket, username, current room, and connection time;
+  - a dictionary of **rooms** (rooms): room name → set of sockets;
+  - a dictionary of **room leaders** (leaders): room name → leader username.
+- Each client belongs to at most **one room** at a time and sends/receives only messages for that room, plus some global notifications.
 
-### Protocole utilisé
+### Protocol Used
 
-- Chaque message est une **ligne de texte UTF‑8** terminée par `\n` (protocole texte très simple).
-- À la connexion, le client envoie **uniquement son nom d'utilisateur** :
+- Each message is a **single UTF-8 text line** terminated by `\n` (very simple text protocol).
+- On connection, the client sends **only its username**:
   - `salam\n`
-- Les **commandes** commencent par `/` et sont envoyées telles quelles :
-  - `/users\n`, `/room\n`, `/join main\n`, `/leader\n`…
-- Les **messages de chat** sont des lignes de texte sans préfixe spécial :
+- **Commands** start with `/` and are sent as typed:
+  - `/users\n`, `/room\n`, `/join main\n`, `/leader\n`, etc.
+- **Chat messages** are plain text lines with no special prefix:
   - `Hello everyone!\n`
-- Le serveur renvoie des chaînes lisibles par l'humain, déjà formatées, par exemple :
-  - messages de chat de salle : `[HH:MM:SS] salam: Hello everyone!`
-  - notifications de salle : `[HH:MM:SS] salam joined the room`
-  - notifications globales de départ : `[HH:MM:SS] salam left the room main`
-  - réponses aux commandes : `Leader of room main: salam`, `Users: user1, user2`, etc.
+- The server returns human-readable, preformatted strings, for example:
+  - room chat messages: `[HH:MM:SS] salam: Hello everyone!`
+  - room notifications: `[HH:MM:SS] salam joined the room`
+  - global leave notifications: `[HH:MM:SS] salam left the room main`
+  - command replies: `Leader of room main: salam`, `Users: user1, user2`, etc.
 
-### Choix techniques
+### Technical Choices
 
-- Utilisation de **sockets TCP** et de `select.select()` côté serveur pour gérer plusieurs clients sans multithreading.
-- Côté client, utilisation d'un **thread dédié à l'entrée clavier** pour rester compatible Windows (où `select()` ne supporte pas `stdin`), et `select()` uniquement sur la socket réseau.
-- Protocole volontairement **très simple et textuel**, afin de faciliter le débogage (un simple `print` permet de voir l'intégralité des messages qui transitent).
-- **Leader par salle** choisi de manière déterministe : le client le plus ancien dans la salle (champ `connected_at`). Lorsqu'un leader quitte la salle ou se déconnecte, un nouveau leader est automatiquement ré‑élu.
+- Use of **TCP sockets** and `select.select()` on the server side to manage multiple clients without multithreading.
+- On the client side, use of a **dedicated thread for keyboard input** to stay compatible with Windows (where `select()` does not support `stdin`), and `select()` only on the network socket.
+- Deliberately **simple, text-based protocol** to make debugging easy (a simple print shows all traffic).
+- **Per-room leader** chosen deterministically: the oldest client in the room (field `connected_at`). When a leader leaves the room or disconnects, a new leader is automatically re-elected.
 
 ---
 
