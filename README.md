@@ -218,8 +218,8 @@ Connected to chat as salam. Type 'quit' to exit.
 Open more terminals and run the client with different usernames:
 
 ```bash
-python client_projet.py bob 127.0.0.1 7777
-python client_projet.py charlie 127.0.0.1 7777
+python client_projet.py user1 127.0.0.1 7777
+python client_projet.py user2 127.0.0.1 7777
 ```
 
 You can now chat between all connected clients.
