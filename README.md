@@ -2,6 +2,8 @@
 
 This project is a simple distributed-style chat application built in Python.
 
+## this project has been made for the module: distributed-systems in my thrid year as a computer science student.
+
 It consists of:
 
 - A TCP server: `server_projet.py`
@@ -111,7 +113,7 @@ From the client, you can type:
 
   ```text
   <username>\n
-  Example:  alice\n
+  Example:  salam\n
   ```
 
 - **Commands**: sent exactly as typed (e.g. `/join main\n`).
@@ -143,7 +145,7 @@ Server messages are simple human-readable strings, already formatted. The import
   For example:
 
   ```text
-  [12:34:56] alice: Hello everyone!
+  [12:34:56] salam: Hello everyone!
   ```
 
 - **Join/leave notifications**
@@ -151,13 +153,13 @@ Server messages are simple human-readable strings, already formatted. The import
   When a user joins a room:
 
   ```text
-  [HH:MM:SS] alice joined the room
+  [HH:MM:SS] salam joined the room
   ```
 
   When a user leaves a room (via `/join` to another room) **or disconnects**:
 
   ```text
-  [HH:MM:SS] alice left the room main
+  [HH:MM:SS] salam left the room main
   ```
 
   This is sent to **all connected users**, regardless of room, so everyone sees who left which room.
@@ -202,13 +204,13 @@ In a **new** terminal window, from the same directory:
 python client_projet.py <username> <server_ip> <server_port>
 
 Example on the same machine:
-python client_projet.py alice 127.0.0.1 7777
+python client_projet.py salam 127.0.0.1 7777
 ```
 
 You should see something like:
 
 ```text
-Connected to chat as alice. Type 'quit' to exit.
+Connected to chat as salam. Type 'quit' to exit.
 ```
 
 ### 3. Start Additional Clients
@@ -251,8 +253,6 @@ This design keeps the client portable and avoids platform-specific hacks.
 
 ## Possible Extensions
 
-If you want to extend this project, here are some ideas:
-
 - **Message ordering and history**
   - Store messages on the server and serve history to newly joined clients.
 
@@ -271,4 +271,4 @@ If you want to extend this project, here are some ideas:
 
 ## License
 
-This project is intended for educational purposes to illustrate basic distributed-systems concepts (rooms, leader election, socket programming, timestamps). Use and modify it freely as needed for learning or experimentation.
+This project is intended for educational purposes to illustrate basic distributed-systems concepts (rooms, leader election, socket programming, timestamps) for the distributed-systems module. Use and modify it freely as needed for learning or experimentation.
