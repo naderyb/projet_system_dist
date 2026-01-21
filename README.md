@@ -57,7 +57,7 @@ The server manages multiple chat rooms, tracks connected users, elects a leader 
 - **Per-room leader election** (earliest-connected user in each room)
 - **Global notifications** when users leave rooms or disconnect
 - **Human-readable timestamps** on all broadcast messages
-- **Graceful disconnect** from clients (`quit` command or `Ctrl+C`)
+- **Graceful disconnect** from clients (`exit` command or `Ctrl+C`)
 - **Windows-friendly client**: background thread for keyboard input, `select()` only on the socket
 
 ---
@@ -78,7 +78,7 @@ The server manages multiple chat rooms, tracks connected users, elects a leader 
 - **Client** (`client_projet.py`)
   - Connects to the server with a username
   - Sends chat messages typed by the user
-  - Supports commands: `/users`, `/room`, `/join <room>`, `/leader`, `quit`
+  - Supports commands: `/users`, `/room`, `/join <room>`, `/leader`, `exit`
   - Uses a background thread to read from `stdin` and a main loop to receive from the socket
 
 ### Communication Model
@@ -137,7 +137,7 @@ From the client, you can type:
 - `/join <room>` – join a room (creates it if it does not exist).
   - Example: `/join main`, `/join project1`.
 - `/leader` – display the leader of your current room.
-- `quit` – disconnect cleanly from the server.
+- `exit` – disconnect cleanly from the server.
 - Any other text – sent as a **chat message** to your current room.
 
 ---
@@ -247,7 +247,7 @@ python client_projet.py salam 127.0.0.1 7777
 You should see something like:
 
 ```text
-Connected to chat as salam. Type 'quit' to exit.
+Connected to chat as salam. Type 'exit' to exit.
 ```
 
 ### 3. Start Additional Clients
@@ -263,7 +263,7 @@ You can now chat between all connected clients.
 
 ### 4. Exiting
 
-- Type `quit` in the client to disconnect gracefully, or
+- Type `exit` in the client to disconnect gracefully, or
 - Press `Ctrl+C` to trigger a clean exit handler.
 
 The server will log the disconnection and broadcast a system message informing other clients.
